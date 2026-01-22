@@ -4,28 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ProAPI Solutions – ProAPI Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
-
-    body {
-      line-height: 1.6;
-      color: #333;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* Navbar */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body { line-height: 1.6; color: #333; background: #f5f5f5; }
+    a { text-decoration: none; color: inherit; }
     nav {
-      background-color: #002366; /* royal blue */
+      background-color: #002366;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -35,40 +20,17 @@
       top: 0;
       z-index: 1000;
     }
-
-    nav .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav ul li a:hover {
-      color: #FFD700; /* gold */
-    }
-
-    /* Hero Section */
+    nav .logo { font-size: 1.5rem; font-weight: bold; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul li a:hover { color: #FFD700; }
     .hero {
       background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1581091012184-49c2c1c2ff17?fit=crop&w=1950&q=80') center/cover no-repeat;
       color: white;
       text-align: center;
       padding: 8rem 2rem 4rem 2rem;
     }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-    }
-
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.3rem; margin-bottom: 2rem; }
     .hero .cta {
       background-color: #FFD700;
       color: #002366;
@@ -76,32 +38,12 @@
       font-weight: bold;
       border-radius: 8px;
       transition: 0.3s;
+      display: inline-block;
     }
-
-    .hero .cta:hover {
-      background-color: #fff;
-    }
-
-    /* Sections */
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    section h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #002366;
-    }
-
-    /* Features Grid */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
+    .hero .cta:hover { background-color: #fff; }
+    section { padding: 4rem 2rem; max-width: 1200px; margin: auto; }
+    section h2 { text-align: center; margin-bottom: 2rem; color: #002366; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
     .feature-card {
       background-color: #f9f9f9;
       padding: 2rem;
@@ -109,309 +51,438 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: 0.3s;
     }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    }
-
-    .feature-card h3 {
-      margin-bottom: 1rem;
+    .feature-card:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+    .feature-card h3 { margin-bottom: 1rem; color: #002366; }
+    .feature-card p { color: #555; }
+    .pricing-table { width: 100%; border-collapse: collapse; margin-top: 2rem; background:white; border-radius:10px; overflow:visible; }
+    .pricing-table th, .pricing-table td { border: 1px solid #ddd; padding: 1rem; text-align: center; }
+    .pricing-table th { background-color: #002366; color: white; }
+    .pricing-table tr:nth-child(even) { background-color: #f2f2f2; }
+    .pricing-table button {
+      background-color: #FFD700;
       color: #002366;
-    }
-
-    .feature-card p {
-      color: #555;
-    }
-
-    /* Pricing Table */
-    .pricing-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2rem;
-    }
-
-    .pricing-table th, .pricing-table td {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .pricing-table th {
-      background-color: #002366;
-      color: white;
-    }
-
-    .pricing-table tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .pricing-table a {
-      color: #FFD700;
       font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .pricing-table a:hover {
-      color: #002366;
-    }
-
-    /* Contact Form */
-    .contact-form {
-      max-width: 600px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .contact-form input, 
-    .contact-form textarea {
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-
-    .contact-form button {
-      background-color: #002366;
-      color: white;
-      padding: 1rem;
       border: none;
-      border-radius: 8px;
+      padding: 0.5rem 1.5rem;
+      border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
+      transition:0.3s;
+      font-size: 0.95rem;
     }
-
-    .contact-form button:hover {
+    .pricing-table button:hover { background-color: #002366; color: #FFD700; }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      margin-left: 10px;
+      background-color: white;
+      min-width: 120px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+      z-index: 1000;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    .dropdown-content a {
+      color: #002366;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+    .dropdown-content a:hover {
       background-color: #FFD700;
       color: #002366;
     }
-
-    /* Footer */
-    footer {
-      background-color: #002366;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 2rem;
+    .dropdown:hover .dropdown-content {
+      display: block;
     }
-
-    /* Responsive */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 2rem;
+      border: 1px solid #888;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover { color: #000; }
+    .service-details { margin-top: 1rem; }
+    .service-details h3 { color: #002366; margin-bottom: 1rem; }
+    .service-details ul { list-style: none; padding: 0; }
+    .service-details li {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      background: #f9f9f9;
+      border-left: 3px solid #FFD700;
+      border-radius: 4px;
+    }
+    .contact-form { max-width: 600px; margin: auto; display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input, .contact-form textarea { padding: 1rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; }
+    .contact-form button { background-color: #002366; color: white; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .contact-form button:hover { background-color: #FFD700; color: #002366; }
+    footer { background-color: #002366; color: white; text-align: center; padding: 2rem; margin-top: 2rem; }
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      nav ul {
-        flex-direction: column;
-        gap: 1rem;
-      }
+      .hero h1 { font-size: 2.2rem; }
+      nav ul { flex-direction: column; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav>
-    <div class="logo">ProAPI Solutions</div>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#contact">Contact Us</a></li>
-    </ul>
-  </nav>
+<nav>
+  <div class="logo">ProAPI Solutions</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact Us</a></li>
+  </ul>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <h1>ProAPI Solutions for Every Industry</h1>
-    <p>Delivering reliable, secure, and scalable APIs that seamlessly connect web, software, and mobile applications, empowering businesses to streamline processes, foster integration, unlock actionable insights, and accelerate digital innovation. Our solutions enhance efficiency, drive collaboration, and enable organizations to stay ahead in an ever-evolving digital landscape.</p>
-    <a href="#contact" class="cta">Get Started</a>
-  </section>
+<section class="hero" id="home">
+  <h1>ProAPI Solutions for Every Industry</h1>
+  <p>Delivering reliable, secure, and scalable APIs that seamlessly connect web, software, and mobile applications.</p>
+  <a href="#contact" class="cta">Get Started</a>
+</section>
 
- <!-- About Section -->
 <section id="about">
-  <h2 style="margin-bottom:2rem;">About Us</h2>
+  <h2>About Us</h2>
   <p style="text-align:center; max-width:800px; margin:auto; margin-bottom:3rem;">
-    ProAPI Solutions is a leading provider of API development, integration, and management services for web, software, and mobile applications. Our purpose is to empower businesses and developers with robust, scalable, and secure APIs that streamline operations, enhance connectivity, and drive digital transformation.
+    ProAPI Solutions is a leading provider of API development, integration, and management services for web, software, and mobile applications.
   </p>
-
-  <!-- Vision & Mission Professional Cards -->
   <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; max-width:1200px; margin:auto;">
-    
-    <!-- Vision Card -->
-    <div style="flex:1 1 400px; background-color:#ffffff; border-left:5px solid #002366; padding:2rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.1); transition:0.3s;">
-      <h3 style="color:#002366; margin-bottom:1rem; font-size:1.5rem;">Our Vision</h3>
-      <p style="color:#555; line-height:1.6;">
-        To become the go-to partner for innovative, reliable, and future-ready API solutions, connecting software ecosystems globally.
-      </p>
+    <div style="flex:1 1 400px; background-color:#ffffff; border-left:5px solid #002366; padding:2rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.1);">
+      <h3 style="color:#002366;">Our Vision</h3>
+      <p style="color:#555; line-height:1.6;">To become the go-to partner for innovative, reliable, and future-ready API solutions, connecting software ecosystems globally.</p>
     </div>
-    
-    <!-- Mission Card -->
-    <div style="flex:1 1 400px; background-color:#ffffff; border-left:5px solid #FFD700; padding:2rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.1); transition:0.3s;">
-      <h3 style="color:#002366; margin-bottom:1rem; font-size:1.5rem;">Our Mission</h3>
+    <div style="flex:1 1 400px; background-color:#ffffff; border-left:5px solid #FFD700; padding:2rem; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.1);">
+      <h3 style="color:#002366;">Our Mission</h3>
       <ul style="color:#555; line-height:1.6; padding-left:1.5rem;">
-        <li>Deliver high-performance APIs that simplify data exchange between apps and systems.</li>
-        <li>Provide custom API solutions tailored to business needs.</li>
-        <li>Ensure security, scalability, and seamless integration across platforms.</li>
-        <li>Support developers and enterprises in building smarter, faster, and more connected applications.</li>
+        <li>Deliver high-performance APIs that simplify data exchange</li>
+        <li>Provide custom API solutions tailored to business needs</li>
+        <li>Ensure security, scalability, and seamless integration</li>
       </ul>
     </div>
-
   </div>
 </section>
 
+<section id="services">
+  <h2>Our Services</h2>
+  <div class="features">
+    <div class="feature-card"><h3>API Development</h3><p>Custom APIs for web, mobile, and software platforms.</p></div>
+    <div class="feature-card"><h3>API Integration</h3><p>Connecting third-party services efficiently and securely.</p></div>
+    <div class="feature-card"><h3>API Management</h3><p>Monitoring, scaling, and securing your API ecosystem.</p></div>
+    <div class="feature-card"><h3>Consultancy</h3><p>Expert guidance on API design and optimization.</p></div>
+    <div class="feature-card"><h3>Developer Support</h3><p>Comprehensive documentation and troubleshooting.</p></div>
+    <div class="feature-card"><h3>Why Choose Us</h3><p>Expert team, reliable APIs, and innovative solutions.</p></div>
+  </div>
+</section>
 
+<section id="pricing">
+  <h2>Pricing (USD)</h2>
+  <table class="pricing-table" id="pricingTable">
+    <tr>
+      <th>API / Framework</th>
+      <th>Base Cost</th>
+      <th>VAT 7.5%</th>
+      <th>Total (USD)</th>
+      <th>Action</th>
+    </tr>
+  </table>
+</section>
 
-  <!-- Services Section -->
-  <section id="services">
-    <h2>Our Services</h2>
-    <div class="features">
-      <div class="feature-card">
-        <h3>API Development</h3>
-        <p>Custom APIs for web, mobile, and software platforms tailored to your business needs.</p>
-      </div>
-      <div class="feature-card">
-        <h3>API Integration</h3>
-        <p>Connecting third-party services to existing systems efficiently and securely.</p>
-      </div>
-      <div class="feature-card">
-        <h3>API Management</h3>
-        <p>Monitoring, scaling, and securing your API ecosystem for optimal performance.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Consultancy</h3>
-        <p>Expert guidance on best practices for API design, deployment, and optimization.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Developer Support</h3>
-        <p>Comprehensive documentation, testing, and troubleshooting for smooth adoption.</p>
-      </div>
-      <tr></tr>
-        <td>Geo-Location API</td>
-        <td>$338.00</td>
-        <td>$25.35</td>
-        <td>$363.35</td>
-        <td><a href="https://yourpaymentgateway.com/geolocation-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <div class="feature-card">
-        <h3>Why Choose Us</h3>
-        <p>Expert team, reliable APIs, innovative solutions, and client-centric services designed to achieve your business goals.</p>
-      </div>
-    </div>
-  </section>
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form class="contact-form" onsubmit="return false;">
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="text" placeholder="Subject" required>
+    <textarea rows="5" placeholder="Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
 
-  <!-- Pricing Section -->
-  <section id="pricing">
-    <h2>Pricing (USD)</h2>
-    <table class="pricing-table">
-      <tr>
-        <th>API / Framework</th>
-        <th>Base Cost</th>
-        <th>VAT 7.5%</th>
-        <th>Total (USD)</th>
-        <th>Purchase</th>
-      </tr>
-      <tr>
-        <td>Authentication API</td>
-        <td>$500.00</td>
-        <td>$37.50</td>
-        <td>$537.50</td>
-        <td><a href="https://yourpaymentgateway.com/auth-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>User Management API</td>
-        <td>$400.00</td>
-        <td>$30.00</td>
-        <td>$430.00</td>
-        <td><a href="https://yourpaymentgateway.com/user-mgmt" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Payment & Transaction API</td>
-        <td>$600.00</td>
-        <td>$45.00</td>
-        <td>$645.00</td>
-        <td><a href="https://yourpaymentgateway.com/payment-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Notification API</td>
-        <td>$350.00</td>
-        <td>$26.25</td>
-        <td>$376.25</td>
-        <td><a href="https://yourpaymentgateway.com/notification-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Analytics & Reporting API</td>
-        <td>$450.00</td>
-        <td>$33.75</td>
-        <td>$483.75</td>
-        <td><a href="https://yourpaymentgateway.com/analytics-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>File Storage & Management API</td>
-        <td>$300.00</td>
-        <td>$22.50</td>
-        <td>$322.50</td>
-        <td><a href="https://yourpaymentgateway.com/file-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>iOS Framework & API</td>
-        <td>$914.00</td>
-        <td>$68.55</td>
-        <td>$982.55</td>
-        <td><a href="https://yourpaymentgateway.com/ios-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Android Framework & API</td>
-        <td>$718.00</td>
-        <td>$53.85</td>
-        <td>$771.85</td>
-        <td><a href="https://yourpaymentgateway.com/android-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Windows Framework & API</td>
-        <td>$612.00</td>
-        <td>$45.90</td>
-        <td>$657.90</td>
-        <td><a href="https://yourpaymentgateway.com/windows-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Security & Compliance Layer</td>
-        <td>$400.00</td>
-        <td>$30.00</td>
-        <td>$430.00</td>
-        <td><a href="https://yourpaymentgateway.com/security-api" target="_blank">Buy Now</a></td>
-      </tr>
-      <tr>
-        <td>Cloud Hosting & Infrastructure</td>
-        <td>$500.00</td>
-        <td>$37.50</td>
-        <td>$537.50</td>
-        <td><a href="https://yourpaymentgateway.com/cloud-hosting" target="_blank">Buy Now</a></td>
-      </tr>
-    </table>
-  </section>
+<footer>&copy; 2025 ProAPI Solutions. All Rights Reserved.</footer>
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <form class="contact-form">
-      <input type="text" placeholder="Full Name" required>
-      <input type="email" placeholder="Email Address" required>
-      <input type="text" placeholder="Subject" required>
-      <textarea rows="5" placeholder="Message" required></textarea>
-      <button type="submit">Send Message</button>
+<div id="viewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('viewModal')">&times;</span>
+    <h2 id="viewTitle" style="color:#002366; margin-bottom:1rem;"></h2>
+    <div id="viewContent" class="service-details"></div>
+  </div>
+</div>
+
+<div id="invoiceModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('invoiceModal')">&times;</span>
+    <h2 style="color:#002366; margin-bottom:1rem;">Invoice Details</h2>
+    <form id="invoiceForm" class="contact-form">
+      <input type="text" id="customerName" placeholder="Full Name" required>
+      <input type="text" id="companyName" placeholder="Company Name" required>
+      <input type="text" id="customerAddress" placeholder="Address" required>
+      <input type="email" id="customerEmail" placeholder="Email Address" required>
+      <button type="submit">Generate & Download Invoice</button>
     </form>
-  </section>
+  </div>
+</div>
 
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 ProAPI Solutions. All Rights Reserved.
-  </footer>
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('paymentModal')">&times;</span>
+    <h2 style="color:#002366; margin-bottom:1rem;">Payment Details</h2>
+    <p id="paymentInfo" style="margin-bottom:1rem;"></p>
+    <form class="contact-form" onsubmit="return false;">
+      <input type="text" placeholder="Cardholder Name" required>
+      <input type="text" placeholder="Card Number" required>
+      <div style="display:flex; gap:1rem;">
+        <input type="text" placeholder="MM/YY" required style="flex:1;">
+        <input type="text" placeholder="CVV" required style="flex:1;">
+      </div>
+      <button type="submit">Complete Purchase</button>
+    </form>
+  </div>
+</div>
 
+<script>
+const { jsPDF } = window.jspdf;
+
+const servicePackages = {
+  "Authentication API": { base: 500, features: ["OAuth 2.0 Implementation", "JWT Token Management", "Two-Factor Authentication (2FA)", "Biometric Authentication Support", "Password Encryption & Hashing", "Session Management", "Single Sign-On (SSO)", "Security Audit & Monitoring"] },
+  "User Management API": { base: 400, features: ["User Registration & Login", "Profile Management System", "Role-Based Access Control (RBAC)", "Password Reset & Recovery", "Email & Phone Verification", "User Activity Logging", "Account Suspension/Deletion", "Custom User Attributes"] },
+  "Payment & Transaction API": { base: 600, features: ["Multi-Gateway Integration (Stripe, PayPal)", "Secure Payment Processing", "Multiple Currency Support", "Recurring Payments & Subscriptions", "Refund & Chargeback Management", "Transaction History & Reporting", "PCI DSS Compliance", "Webhook Integration"] },
+  "Notification API": { base: 350, features: ["Push Notifications (FCM & APNs)", "Email Notifications", "SMS Notifications", "In-App Notifications", "Scheduled & Triggered Notifications", "Template Management", "Delivery Analytics & Tracking", "A/B Testing Support"] },
+  "Analytics & Reporting API": { base: 450, features: ["Custom Analytics Dashboard", "Real-time Data Tracking", "Advanced Report Generation", "Data Visualization Tools", "Export to Multiple Formats", "KPI Monitoring", "User Behavior Analytics", "Custom Metrics & Events"] },
+  "File Storage & Management API": { base: 300, features: ["Cloud Storage Integration (AWS S3, Azure, GCP)", "Secure File Upload/Download", "CDN Configuration", "Access Control & Permissions", "File Versioning System", "Automatic Backup Solutions", "Image/Video Processing", "Storage Analytics"] },
+  "iOS Framework & API": { base: 914, features: ["Native iOS SDK Development", "Swift & Objective-C Support", "App Store Publishing Assistance", "Push Notification Integration", "In-App Purchase Implementation", "Core Data & Cloud Sync", "UI/UX Component Library", "Performance Optimization", "TestFlight Integration", "Comprehensive Documentation"] },
+  "Android Framework & API": { base: 718, features: ["Native Android SDK Development", "Kotlin & Java Support", "Play Store Publishing Assistance", "Firebase Integration", "In-App Billing Implementation", "Room Database & Sync", "Material Design Components", "Performance Optimization", "Beta Testing Setup", "Complete Documentation"] },
+  "Windows Framework & API": { base: 612, features: ["Windows Desktop API Development", ".NET Framework Integration", "UWP & WPF Support", "Microsoft Store Publishing", "Windows Authentication", "Local & Cloud Data Sync", "Modern UI Components", "Performance Tuning", "Installer Package Creation", "Technical Documentation"] },
+  "Geo-Location API": { base: 338, features: ["Real-time Location Tracking", "Geofencing Capabilities", "Address Geocoding & Reverse Geocoding", "Distance & Route Calculation", "Map Integration (Google Maps, Mapbox)", "Location-based Search", "IP Geolocation", "Location History & Analytics"] },
+  "Security & Compliance Layer": { base: 400, features: ["End-to-End Encryption", "Data Privacy Compliance (GDPR, CCPA)", "Security Vulnerability Assessment", "Penetration Testing", "SSL/TLS Certificate Management", "API Rate Limiting & Throttling", "DDoS Protection", "Audit Logging & Monitoring"] },
+  "Cloud Hosting & Infrastructure": { base: 500, features: ["Cloud Server Setup (AWS, Azure, GCP)", "Load Balancing Configuration", "Auto-scaling Implementation", "Database Optimization", "CDN Integration", "Backup & Disaster Recovery", "24/7 Monitoring & Alerts", "DevOps & CI/CD Pipeline", "Cost Optimization", "Technical Support"] }
+};
+
+let currentService = null;
+
+function generatePricingTable() {
+  const table = document.getElementById('pricingTable');
+  Object.keys(servicePackages).forEach(name => {
+    const item = servicePackages[name];
+    const vat = +(item.base * 0.075).toFixed(2);
+    const total = +(item.base + vat).toFixed(2);
+    const row = table.insertRow();
+    row.insertCell().innerText = name;
+    row.insertCell().innerText = `$${item.base.toFixed(2)}`;
+    row.insertCell().innerText = `$${vat.toFixed(2)}`;
+    row.insertCell().innerText = `$${total.toFixed(2)}`;
+    const actionCell = row.insertCell();
+    actionCell.innerHTML = `<div class="dropdown"><button>Action ▼</button><div class="dropdown-content"><a href="#" onclick="viewService('${name}'); return false;">View</a><a href="#" onclick="showInvoiceForm('${name}', ${total}); return false;">Invoice</a><a href="#" onclick="showPayment('${name}', ${total}); return false;">Buy Now</a></div></div>`;
+  });
+}
+
+function viewService(serviceName) {
+  const service = servicePackages[serviceName];
+  document.getElementById('viewTitle').innerText = serviceName;
+  let content = '<h3>Package Includes:</h3><ul>';
+  service.features.forEach(f => { content += `<li>${f}</li>`; });
+  content += '</ul>';
+  const vat = +(service.base * 0.075).toFixed(2);
+  const total = +(service.base + vat).toFixed(2);
+  content += `<p style="margin-top:1rem; font-weight:bold; color:#002366;">Total Price: $${total.toFixed(2)} (including 7.5% VAT)</p>`;
+  document.getElementById('viewContent').innerHTML = content;
+  document.getElementById('viewModal').style.display = 'block';
+}
+
+function showInvoiceForm(serviceName, total) {
+  currentService = { name: serviceName, total: total };
+  document.getElementById('invoiceModal').style.display = 'block';
+}
+
+function showPayment(serviceName, total) {
+  document.getElementById('paymentInfo').innerText = `Service: ${serviceName} - Total: $${total.toFixed(2)}`;
+  document.getElementById('paymentModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+document.getElementById('invoiceForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const customerName = document.getElementById('customerName').value;
+  const companyName = document.getElementById('companyName').value;
+  const customerAddress = document.getElementById('customerAddress').value;
+  const customerEmail = document.getElementById('customerEmail').value;
+  generateInvoice(currentService.name, currentService.total, customerName, companyName, customerAddress, customerEmail);
+  closeModal('invoiceModal');
+  this.reset();
+});
+
+function generateInvoice(serviceName, total, customerName, companyName, customerAddress, customerEmail) {
+  const service = servicePackages[serviceName];
+  const doc = new jsPDF();
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(28);
+  doc.setTextColor(0, 35, 102);
+  doc.setLineWidth(2.5);
+  doc.setDrawColor(0, 35, 102);
+  doc.line(15, 20, 110, 20);
+  doc.setLineWidth(2.5);
+  doc.line(15, 24, 62, 24);
+  doc.setFontSize(10);
+  doc.text("ProAPI Solutions", 15, 32);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text("123 API Street, Tech City,", 15, 36);
+  doc.text("contact@proapisolution.com | +1 (555) 123-4567", 15, 40);
+  doc.setFontSize(32);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(20, 30, 70);
+  doc.text("INVOICE", 150, 25);
+  const invoiceNumber = `US-${Math.floor(Math.random() * 900 + 100)}`;
+  const today = new Date();
+  const dueDate = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000);
+  const poNumber = `${Math.floor(Math.random() * 9000 + 1000)}/2025`;
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 35, 102);
+  let rightY = 35;
+  doc.text("INVOICE #", 145, rightY);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.text(invoiceNumber, 175, rightY);
+  rightY += 6;
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 35, 102);
+  doc.text("INVOICE DATE", 145, rightY);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.text(today.toLocaleDateString('en-US'), 175, rightY);
+  rightY += 6;
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 35, 102);
+  doc.text("P.O.#", 145, rightY);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.text(poNumber, 175, rightY);
+  rightY += 6;
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 35, 102);
+  doc.text("DUE DATE", 145, rightY);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.text(dueDate.toLocaleDateString('en-US'), 175, rightY);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(0, 35, 102);
+  doc.text("BILL TO", 15, 55);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(0, 0, 0);
+  doc.text(customerName, 15, 61);
+  doc.text(companyName, 15, 66);
+  doc.text(customerAddress, 15, 71);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(0, 35, 102);
+  doc.text("SHIP TO", 105, 55);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.setTextColor(0, 0, 0);
+  doc.text(customerName, 105, 61);
+  doc.text(customerAddress, 105, 66);
+  let yPos = 85;
+  doc.setFillColor(0, 35, 102);
+  doc.rect(15, yPos, 180, 8, 'F');
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.setTextColor(255, 255, 255);
+  doc.text("QTY", 17, yPos + 5);
+  doc.text("DESCRIPTION", 40, yPos + 5);
+  doc.text("UNIT PRICE", 140, yPos + 5);
+  doc.text("AMOUNT", 170, yPos + 5);
+  yPos += 13;
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(9);
+  const subtotal = +(total / 1.075).toFixed(2);
+  const itemPrice = subtotal;
+  doc.text("1", 17, yPos);
+  doc.text(serviceName, 40, yPos);
+  doc.text(`${itemPrice.toFixed(2)}`, 140, yPos);
+  doc.text(`${itemPrice.toFixed(2)}`, 170, yPos);
+  yPos += 6;
+  doc.setFontSize(8);
+  doc.setTextColor(80, 80, 80);
+  service.features.forEach((feature) => {
+    if (yPos > 245) { doc.addPage(); yPos = 20; }
+    doc.text(`   • ${feature}`, 40, yPos);
+    yPos += 5;
+  });
+  yPos += 10;
+  if (yPos > 240) { doc.addPage(); yPos = 20; }
+  doc.setDrawColor(220, 220, 220);
+  doc.setLineWidth(0.5);
+  doc.line(120, yPos, 195, yPos);
+  yPos += 7;
+  doc.setFontSize(9);
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "normal");
+  doc.text("Subtotal", 140, yPos);
+  doc.text(`${subtotal.toFixed(2)}`, 170, yPos);
+  yPos += 6;
+  const vat = +(total - subtotal).toFixed(2);
+  doc.text("Sales Tax 7.5%", 140, yPos);
+  doc.text(`${vat.toFixed(2)}`, 170, yPos);
+  yPos += 8;
+  doc.setDrawColor(0, 35, 102);
+  doc.setLineWidth(0.8);
+  doc.line(120, yPos - 2, 195, yPos - 2);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(11);
+  doc.setTextColor(0, 35, 102);
+  doc.text("TOTAL", 140, yPos + 3);
+  doc.text(`${total.toFixed(2)}`, 170, yPos + 3);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text("Terms & Conditions: Payment is due within 24 hours. Thank you for your business!", 20, 280);
+  doc.save(`ProAPI_Invoice_${invoiceNumber}.pdf`);
+}
+
+window.onclick = function(event) {
+  if (event.target.classList.contains('modal')) {
+    event.target.style.display = 'none';
+  }
+}
+
+generatePricingTable();
+</script>
 </body>
 </html>
-
